@@ -8,9 +8,18 @@ library(stringr)
 library(shinyWidgets)
 library(reactable)
 
+#data_list <- list.files("out-data")
+setwd("out-data")
+data_list <- list.files()
+datasets <- sapply(data_list, read.csv, na.strings = "")
+nrow_list <- sapply(datasets, nrow); ncol_list <- sapply(datasets, ncol)
+data_list_dim <- str_c(data_list, " [", nrow_list, "x", ncol_list, "]")
+
 ui <- dashboardPage(
   dashboardHeader(title = "NAIRALAND DATA"),
-  dashboardSidebar(disable = T),
+  dashboardSidebar(
+    pickerInput("select_data", "Select dataset:", data_list_dim, selected = "default.csv [1874x11]")
+  ),
   dashboardBody(
     fluidRow(
       valueBoxOutput("vBox1", width = 6),
@@ -28,19 +37,27 @@ ui <- dashboardPage(
 )
 
 server <- function(input, output, session) {
-  nairaland_users_data <- read.csv("out-data/first-go-csv.csv", na.strings = "")
-  box1 <- nrow(nairaland_users_data)
-  box2 <- ncol(nairaland_users_data)
+  dataset <- reactive({
+    datasets[[str_replace(input$select_data, " .[0-9]+x[0-9]+.", "")]]
+  })
+  
+  #nairaland_users_data <- read.csv("out-data/first-go-csv.csv", na.strings = "")
+  box1 <- reactive({
+    nrow(dataset())
+  })
+  box2 <- reactive({
+    ncol(dataset())
+  })
   
   output$vBox1 <- renderValueBox({
-    valueBox(box1, "Number Of Rows", icon = icon("th-list", lib = "glyphicon"))
+    valueBox(box1(), "Number Of Rows", icon = icon("th-list", lib = "glyphicon"))
   })
   output$vBox2 <- renderValueBox({
-    valueBox(box2, "Number Of Columns", icon = icon("th-list", lib = "glyphicon"))
+    valueBox(box2(), "Number Of Columns", icon = icon("th-list", lib = "glyphicon"))
   })
   
   output$table <- renderReactable({
-    reactable(nairaland_users_data, resizable = T, searchable = T, bordered = T, rownames = F,
+    reactable(dataset(), resizable = T, searchable = T, bordered = T, rownames = F,
               filterable = T, showPageSizeOptions = T, highlight = T, outlined = T, striped = T,
               wrap = F, defaultPageSize = 25, columns = list(name = colDef(width = 140),
                                                              personal_text = colDef(width = 150),

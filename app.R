@@ -18,7 +18,8 @@ data_list_dim <- str_c(data_list, " [", nrow_list, "x", ncol_list, "]")
 ui <- dashboardPage(
   dashboardHeader(title = "NAIRALAND DATA"),
   dashboardSidebar(
-    pickerInput("select_data", "Select dataset:", data_list_dim, selected = "default.csv [1874x11]")
+    pickerInput("select_data", "Select dataset:", data_list_dim, selected = "default.csv [1874x11]"),
+    downloadButton("download", "Download the dataset")
   ),
   dashboardBody(
     fluidRow(
@@ -55,6 +56,15 @@ server <- function(input, output, session) {
   output$vBox2 <- renderValueBox({
     valueBox(box2(), "Number Of Columns", icon = icon("th-list", lib = "glyphicon"))
   })
+  
+  output$download <- downloadHandler(
+    filename = function() {
+      str_replace(input$select_data, " .[0-9]+x[0-9]+.", "")
+    },
+    content = function(file) {
+      write.csv(dataset(), file)
+    }
+  )
   
   output$table <- renderReactable({
     reactable(dataset(), resizable = T, searchable = T, bordered = T, rownames = F,

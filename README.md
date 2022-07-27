@@ -7,3 +7,9 @@ View the live app >> [https://mateen-a-q.shinyapps.io/nairalanddata/](https://ma
 More features will be added in the future.
 
 See the screenshots below ;)
+
+![img1](media/screenshot1.png)
+
+---
+
+![img1](media/screenshot2.png)

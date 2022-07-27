@@ -21,17 +21,15 @@ ui <- dashboardPage(
   dashboardHeader(title = "NAIRALAND DATA"),
   dashboardSidebar(
     pickerInput("select_data", "Select dataset:", list(`Full Data` = full_data_list_dim,
-                                                       `Partial Data` = partial_data_list_dim), selected = "default.csv [1874x11]")
+                                                       `Partial Data` = partial_data_list_dim), selected = "default.csv [1874x11]"),
+    downloadButton("download", "Download the dataset", class = "btn-block", style = "color:black")
   ),
   dashboardBody(
     fluidRow(
       valueBoxOutput("vBox1", width = 6),
       valueBoxOutput("vBox2", width = 6)
     ),
-    span("Nairaland users data, as extracted from their respective profile pages [you can verify through the profile links]",
-         style = "font-size:17px; font-weight:700"),
-    downloadButton("download", "Download the dataset", style = "float:right; color:white", class = "btn-primary"),
-    br(), br(),
+    h4("Nairaland users data, as extracted from their respective profile pages [you can verify through the profile links]"),
     fluidRow(
       box(width = 12, status = "primary", solidHeader = F, reactableOutput("table"))
     ),

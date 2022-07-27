@@ -14,11 +14,14 @@ data_list <- list.files()
 datasets <- sapply(data_list, read.csv, na.strings = "")
 nrow_list <- sapply(datasets, nrow); ncol_list <- sapply(datasets, ncol)
 data_list_dim <- str_c(data_list, " [", nrow_list, "x", ncol_list, "]")
+full_data_list_dim <- c("default.csv [1874x11]", "first-go-csv8.csv [118x11]", "first-go-csv9.csv [659x11]")
+partial_data_list_dim <- setdiff(data_list_dim, full_data_list_dim)
 
 ui <- dashboardPage(
   dashboardHeader(title = "NAIRALAND DATA"),
   dashboardSidebar(
-    pickerInput("select_data", "Select dataset:", data_list_dim, selected = "default.csv [1874x11]"),
+    pickerInput("select_data", "Select dataset:", list(`Full Data` = full_data_list_dim,
+                                                       `Partial Data` = partial_data_list_dim), selected = "default.csv [1874x11]"),
     downloadButton("download", "Download the dataset")
   ),
   dashboardBody(

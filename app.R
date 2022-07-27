@@ -21,15 +21,17 @@ ui <- dashboardPage(
   dashboardHeader(title = "NAIRALAND DATA"),
   dashboardSidebar(
     pickerInput("select_data", "Select dataset:", list(`Full Data` = full_data_list_dim,
-                                                       `Partial Data` = partial_data_list_dim), selected = "default.csv [1874x11]"),
-    downloadButton("download", "Download the dataset")
+                                                       `Partial Data` = partial_data_list_dim), selected = "default.csv [1874x11]")
   ),
   dashboardBody(
     fluidRow(
       valueBoxOutput("vBox1", width = 6),
       valueBoxOutput("vBox2", width = 6)
     ),
-    h4("Nairaland users data, as extracted from their respective profile pages [you can verify through the profile links]"),
+    span("Nairaland users data, as extracted from their respective profile pages [you can verify through the profile links]",
+         style = "font-size:17px; font-weight:700"),
+    downloadButton("download", "Download the dataset", style = "float:right; color:white", class = "btn-primary"),
+    br(), br(),
     fluidRow(
       box(width = 12, status = "primary", solidHeader = F, reactableOutput("table"))
     ),
@@ -70,8 +72,8 @@ server <- function(input, output, session) {
   )
   
   output$table <- renderReactable({
-    reactable(dataset(), resizable = T, searchable = T, bordered = T, rownames = F,
-              filterable = T, showPageSizeOptions = T, highlight = T, outlined = T, striped = T,
+    reactable(dataset(), resizable = T, searchable = T, bordered = T, rownames = F, #filterable = T, 
+              showPageSizeOptions = T, highlight = T, outlined = T, striped = T,
               wrap = F, defaultPageSize = 25, columns = list(name = colDef(width = 140),
                                                              personal_text = colDef(width = 150),
                                                              profile_link = colDef(width = 300, html = T,
@@ -81,7 +83,7 @@ server <- function(input, output, session) {
                                                              personal_text = colDef(width = 150),
                                                              location = colDef(width = 150),
                                                              time_spent_online = colDef(width = 150)),
-              defaultColDef = colDef(na = "-", headerStyle = list(background = "steelblue", color = "white"),
+              defaultColDef = colDef(na = "-", headerStyle = list(backgroundColor = "steelblue", color = "white"),
                                      header = function(value) gsub("_", " ", value) %>% str_to_title()))
   })
 }

@@ -14,14 +14,15 @@ data_list <- list.files()
 datasets <- sapply(data_list, read.csv, na.strings = "")
 nrow_list <- sapply(datasets, nrow); ncol_list <- sapply(datasets, ncol)
 data_list_dim <- str_c(data_list, " [", nrow_list, "x", ncol_list, "]")
-full_data_list_dim <- c("default.csv [1874x11]", "first-go-csv8.csv [118x11]", "first-go-csv9.csv [659x11]")
+full_data_list_dim <- c("default-18000.csv [18200x11]", "first-go-csv8.csv [118x11]", "first-go-csv9.csv [659x11]",
+                        "default-1800.csv [1874x11]")
 partial_data_list_dim <- setdiff(data_list_dim, full_data_list_dim)
 
 ui <- dashboardPage(
   dashboardHeader(title = "NAIRALAND DATA"),
   dashboardSidebar(
     pickerInput("select_data", "Select dataset:", list(`Full Data` = full_data_list_dim,
-                                                       `Partial Data` = partial_data_list_dim), selected = "default.csv [1874x11]"),
+                                                       `Partial Data` = partial_data_list_dim), selected = "default-18000.csv [1874x11]"),
     downloadButton("download", "Download the dataset", class = "btn-block", style = "color:black")
   ),
   dashboardBody(
@@ -33,7 +34,7 @@ ui <- dashboardPage(
     fluidRow(
       box(width = 12, status = "primary", solidHeader = F, reactableOutput("table"))
     ),
-    div("- The current table was generated from all threads on just the first page of 'https://www.nairaland.com/career'", style = "color:red"),
+    div("- The current table was generated from all threads on just the first page of 'https://www.nairaland.com/phones'", style = "color:red"),
     div("- There would be more features added to the app, soon [e.g. charts].", style = "color:red"),
     div("- For all columns with wrapped text, kindly resize the column [drag its borders]", style = "color:red"),
     div("- The data is still in its raw form", style = "color:red")

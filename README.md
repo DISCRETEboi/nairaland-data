@@ -8,8 +8,8 @@ More features will be added in the future.
 
 See the screenshots below ;)
 
-![img1](media/screenshot1.png)
+![img1](media/screenshot3.png)
 
 ---
 
-![img1](media/screenshot2.png)
+![img1](media/screenshot4.png)

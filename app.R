@@ -7,6 +7,7 @@ library(stringr)
 #library(ggplot2)
 library(shinyWidgets)
 library(reactable)
+library(shinycssloaders)
 
 #data_list <- list.files("out-data")
 setwd("out-data")
@@ -32,7 +33,7 @@ ui <- dashboardPage(
     ),
     h4("Nairaland users data, as extracted from their respective profile pages [you can verify through the profile links]"),
     fluidRow(
-      box(width = 12, status = "primary", solidHeader = F, reactableOutput("table"))
+      box(width = 12, status = "primary", solidHeader = F, withSpinner(reactableOutput("table")))
     ),
     div("- The current table was generated from all threads on just the first page of 'https://www.nairaland.com/phones'", style = "color:red"),
     div("- There would be more features added to the app, soon [e.g. charts].", style = "color:red"),

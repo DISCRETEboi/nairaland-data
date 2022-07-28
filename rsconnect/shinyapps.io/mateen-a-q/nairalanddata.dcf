@@ -5,9 +5,9 @@ account: mateen-a-q
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6699546
-bundleId: 6141673
+bundleId: 6143347
 url: https://mateen-a-q.shinyapps.io/nairalanddata/
-when: 1659008883.39613
-lastSyncTime: 1659008883.39613
+when: 1659039886.8391
+lastSyncTime: 1659039886.8391
 asMultiple: FALSE
 asStatic: FALSE

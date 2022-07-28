@@ -15,8 +15,8 @@ data_list <- list.files()
 datasets <- sapply(data_list, read.csv, na.strings = "")
 nrow_list <- sapply(datasets, nrow); ncol_list <- sapply(datasets, ncol)
 data_list_dim <- str_c(data_list, " [", nrow_list, "x", ncol_list, "]")
-full_data_list_dim <- c("full-18000.csv [18200x11]", "full-1800.csv [1874x11]", "full-mini1.csv [659x11]",
-                        "full-mini2.csv [118x11]")
+full_data_list_dim <- c("full-18000.csv [18200x11]", "full-4800.csv [4850x11]", "full-4100.csv [4105x11]",
+                        "full-mini2.csv [118x11]", "full-1800.csv [1874x11]", "full-mini1.csv [659x11]")
 partial_data_list_dim <- setdiff(data_list_dim, full_data_list_dim)
 
 ui <- dashboardPage(

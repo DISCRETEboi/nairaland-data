@@ -15,8 +15,8 @@ data_list <- list.files()
 datasets <- sapply(data_list, read.csv, na.strings = "")
 nrow_list <- sapply(datasets, nrow); ncol_list <- sapply(datasets, ncol)
 data_list_dim <- str_c(data_list, " [", nrow_list, "x", ncol_list, "]")
-full_data_list_dim <- c("default-18000.csv [18200x11]", "first-go-csv8.csv [118x11]", "first-go-csv9.csv [659x11]",
-                        "default-1800.csv [1874x11]")
+full_data_list_dim <- c("full-18000.csv [18200x11]", "full-1800.csv [1874x11]", "full-mini1.csv [659x11]",
+                        "full-mini2.csv [118x11]")
 partial_data_list_dim <- setdiff(data_list_dim, full_data_list_dim)
 
 ui <- dashboardPage(
@@ -27,18 +27,19 @@ ui <- dashboardPage(
     downloadButton("download", "Download the dataset", class = "btn-block", style = "color:black")
   ),
   dashboardBody(
-    fluidRow(
-      valueBoxOutput("vBox1", width = 6),
-      valueBoxOutput("vBox2", width = 6)
-    ),
+    withSpinner(fluidRow(
+      withSpinner(valueBoxOutput("vBox1", width = 6), proxy.height = "100px", color = "steelblue"),
+      withSpinner(valueBoxOutput("vBox2", width = 6), proxy.height = "100px", color = "steelblue")
+    )),
     h4("Nairaland users data, as extracted from their respective profile pages [you can verify through the profile links]"),
     fluidRow(
       box(width = 12, status = "primary", solidHeader = F, withSpinner(reactableOutput("table")))
     ),
     div("- The current table was generated from all threads on just the first page of 'https://www.nairaland.com/phones'", style = "color:red"),
     div("- There would be more features added to the app, soon [e.g. charts].", style = "color:red"),
-    div("- For all columns with wrapped text, kindly resize the column [drag its borders]", style = "color:red"),
-    div("- The data is still in its raw form", style = "color:red")
+    strong("- For all columns with wrapped text, kindly resize the column [drag its borders]", style = "color:red"),
+    div("- The data is still in its raw form", style = "color:red"),
+    strong("* Values recorded in Last Seen are those since the data was last collected, and may not be up to date", style = "color:red")
   )
 )
 
@@ -79,7 +80,7 @@ server <- function(input, output, session) {
                                                              profile_link = colDef(width = 300, html = T,
                                                                                    cell = function(value) str_c("<a href=\"", value, "\">", value, "</a>")),
                                                              time_registered = colDef(width = 150),
-                                                             last_seen = colDef(width = 150),
+                                                             last_seen = colDef(name = "last_seen*", width = 150),
                                                              personal_text = colDef(width = 150),
                                                              location = colDef(width = 150),
                                                              time_spent_online = colDef(width = 150)),

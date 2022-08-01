@@ -33,13 +33,13 @@ ui <- dashboardPage(
     )),
     h4("Nairaland users data, as extracted from their respective profile pages [you can verify through the profile links]"),
     fluidRow(
-      box(width = 12, status = "primary", solidHeader = F, withSpinner(reactableOutput("table")))
+      box(width = 12, status = "primary", solidHeader = F, withSpinner(reactableOutput("table"), proxy.height = "600px"))
     ),
-    div("- The current table was generated from all threads on just the first page of 'https://www.nairaland.com/phones'", style = "color:red"),
-    div("- There would be more features added to the app, soon [e.g. charts].", style = "color:red"),
-    strong("- For all columns with wrapped text, kindly resize the column [drag its borders]", style = "color:red"),
-    div("- The data is still in its raw form", style = "color:red"),
-    strong("* Values recorded in Last Seen are those since the data was last collected, and may not be up to date", style = "color:red")
+    div("The current table was generated from all threads on just the first page of 'https://www.nairaland.com/phones'", style = "color:red"),
+    div("There would be more features added to the app, soon [e.g. charts].", style = "color:red"),
+    div(strong("For all columns with wrapped text, kindly resize the column [drag its borders]"), style = "color:red"),
+    div("The data is still in its raw form", style = "color:red"),
+    div(strong("* Values recorded in Last Seen are those since the data was last collected, and may not be up to date"), style = "color:red")
   )
 )
 
